@@ -1,6 +1,7 @@
 "use client"
 
-import { isManual, isStripe } from "@lib/constants"
+import { isCashfree, isManual, isStripe } from "@lib/constants"
+import { initiatePaymentSession } from "@lib/data/cart"
 import { placeOrder } from "@lib/data/cart"
 import { HttpTypes } from "@medusajs/types"
 import { Button } from "@medusajs/ui"
@@ -30,6 +31,14 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
     case isStripe(paymentSession?.provider_id):
       return (
         <StripePaymentButton
+          notReady={notReady}
+          cart={cart}
+          data-testid={dataTestId}
+        />
+      )
+    case isCashfree(paymentSession?.provider_id):
+      return (
+        <CashfreePaymentButton
           notReady={notReady}
           cart={cart}
           data-testid={dataTestId}
@@ -146,6 +155,72 @@ const StripePaymentButton = ({
       <ErrorMessage
         error={errorMessage}
         data-testid="stripe-payment-error-message"
+      />
+    </>
+  )
+}
+
+const CashfreePaymentButton = ({
+  cart,
+  notReady,
+  "data-testid": dataTestId,
+}: {
+  cart: HttpTypes.StoreCart
+  notReady: boolean
+  "data-testid"?: string
+}) => {
+  const [submitting, setSubmitting] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+  const session = cart.payment_collection?.payment_sessions?.find(
+    (s) => s.status === "pending"
+  )
+
+  const handlePayment = async () => {
+    setSubmitting(true)
+    setErrorMessage(null)
+
+    try {
+      const returnUrl =
+        process.env.NEXT_PUBLIC_CASHFREE_RETURN_URL ||
+        `${window.location.origin}/checkout/payment-callback`
+
+      const response = await initiatePaymentSession(cart, {
+        provider_id: "pp_cashfree_cashfree",
+        context: {
+          return_url: returnUrl,
+        },
+      })
+
+      const paymentLink = response?.payment_collection?.payment_sessions?.find(
+        (s: any) => s.provider_id === "pp_cashfree_cashfree"
+      )?.data?.paymentLink
+
+      if (paymentLink) {
+        window.location.href = paymentLink
+      } else {
+        throw new Error("Payment link not generated")
+      }
+    } catch (err: any) {
+      setErrorMessage(err.message || "Failed to initiate payment")
+      setSubmitting(false)
+    }
+  }
+
+  return (
+    <>
+      <Button
+        disabled={notReady}
+        isLoading={submitting}
+        onClick={handlePayment}
+        size="large"
+        data-testid={dataTestId}
+      >
+        Pay with Cashfree
+      </Button>
+      <ErrorMessage
+        error={errorMessage}
+        data-testid="cashfree-payment-error-message"
       />
     </>
   )

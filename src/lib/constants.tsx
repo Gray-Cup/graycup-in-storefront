@@ -30,7 +30,10 @@ export const paymentInfoMap: Record<
     title: "Manual Payment",
     icon: <CreditCard />,
   },
-  // Add more payment providers here
+  pp_cashfree_cashfree: {
+    title: "Cashfree",
+    icon: <CreditCard />,
+  },
 }
 
 // This only checks if it is native stripe for card payments, it ignores the other stripe-based providers
@@ -42,6 +45,9 @@ export const isPaypal = (providerId?: string) => {
 }
 export const isManual = (providerId?: string) => {
   return providerId?.startsWith("pp_system_default")
+}
+export const isCashfree = (providerId?: string) => {
+  return providerId?.startsWith("pp_cashfree")
 }
 
 // Add currencies that don't need to be divided by 100
