@@ -69,7 +69,7 @@ const SideMenu = () => {
                     </ul>
                     <div className="flex flex-col gap-y-6">
                       <Text className="flex justify-between txt-compact-small">
-                        © {new Date().getFullYear()} Medusa Store. All rights
+                        © {new Date().getFullYear()} Gray Cup. All rights
                         reserved.
                       </Text>
                     </div>
