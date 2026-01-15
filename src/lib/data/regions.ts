@@ -35,12 +35,16 @@ export const retrieveRegion = async (id: string) => {
     .catch(medusaError)
 }
 
+const DEFAULT_REGION = process.env.NEXT_PUBLIC_DEFAULT_REGION || "us"
+
 const regionMap = new Map<string, HttpTypes.StoreRegion>()
 
-export const getRegion = async (countryCode: string) => {
+export const getRegion = async (countryCode?: string) => {
   try {
-    if (regionMap.has(countryCode)) {
-      return regionMap.get(countryCode)
+    const code = countryCode || DEFAULT_REGION
+
+    if (regionMap.has(code)) {
+      return regionMap.get(code)
     }
 
     const regions = await listRegions()
@@ -55,12 +59,14 @@ export const getRegion = async (countryCode: string) => {
       })
     })
 
-    const region = countryCode
-      ? regionMap.get(countryCode)
-      : regionMap.get("us")
+    const region = regionMap.get(code) || regionMap.get(DEFAULT_REGION)
 
     return region
   } catch (e: any) {
     return null
   }
+}
+
+export const getDefaultRegion = async () => {
+  return getRegion(DEFAULT_REGION)
 }

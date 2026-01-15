@@ -1,5 +1,4 @@
 import { Heading, Text } from "@medusajs/ui"
-import Link from "next/link"
 
 import RefinementList from "@modules/store/components/refinement-list"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
@@ -11,7 +10,6 @@ type SearchResultsTemplateProps = {
   ids: string[]
   sortBy?: SortOptions
   page?: string
-  countryCode: string
 }
 
 const SearchResultsTemplate = ({
@@ -19,7 +17,6 @@ const SearchResultsTemplate = ({
   ids,
   sortBy,
   page,
-  countryCode,
 }: SearchResultsTemplateProps) => {
   const pageNumber = page ? parseInt(page) : 1
 
@@ -48,7 +45,6 @@ const SearchResultsTemplate = ({
                 productsIds={ids}
                 sortBy={sortBy}
                 page={pageNumber}
-                countryCode={countryCode}
               />
             </div>
           </>

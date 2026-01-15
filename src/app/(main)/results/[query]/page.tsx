@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 }
 
 type Params = {
-  params: Promise<{ query: string; countryCode: string }>
+  params: Promise<{ query: string }>
   searchParams: Promise<{
     sortBy?: SortOptions
     page?: string
@@ -19,8 +19,8 @@ type Params = {
 }
 
 export default async function SearchResults(props: Params) {
-  const searchParams = await props.searchParams;
-  const params = await props.params;
+  const searchParams = await props.searchParams
+  const params = await props.params
   const { query } = params
   const { sortBy, page } = searchParams
 
@@ -38,7 +38,6 @@ export default async function SearchResults(props: Params) {
       ids={ids}
       sortBy={sortBy}
       page={page}
-      countryCode={params.countryCode}
     />
   )
 }
