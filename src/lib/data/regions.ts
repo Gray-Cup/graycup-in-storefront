@@ -35,7 +35,7 @@ export const retrieveRegion = async (id: string) => {
     .catch(medusaError)
 }
 
-const DEFAULT_REGION = process.env.NEXT_PUBLIC_DEFAULT_REGION || "us"
+const DEFAULT_REGION = process.env.NEXT_PUBLIC_DEFAULT_REGION || "in"
 
 const regionMap = new Map<string, HttpTypes.StoreRegion>()
 
