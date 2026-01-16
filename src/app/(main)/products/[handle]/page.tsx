@@ -21,7 +21,7 @@ export async function generateMetadata(
   }
 
   const product = await listProducts({
-    queryParams: { handle },
+    queryParams: { handle: [handle] },
   }).then(({ response }) => response.products[0])
 
   if (!product) {
