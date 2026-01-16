@@ -1,3 +1,6 @@
+import { Metadata } from "next"
+import { notFound } from "next/navigation"
+import { listProducts } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
 import ProductTemplate from "@modules/products/templates"
 
@@ -28,12 +31,20 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params
-
   const { handle } = params
   const region = await getRegion()
 
+  if (!region) {
+    notFound()
+  }
 
-@@ -48,36 +30,35 @@
+  const product = await listProducts({
+    queryParams: { handle },
+  }).then(({ response }) => response.products[0])
+
+  if (!product) {
+    notFound()
+  }
 
   return {
     title: `${product.title} | Gray Cup`,
