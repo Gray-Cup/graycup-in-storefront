@@ -21,7 +21,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticUrls = staticPages.map(path => ({
     url: `${baseUrl}${path}`,
     lastModified: new Date(),
-    changeFrequency: "monthly",
+    changeFrequency: "monthly" as const,
     priority: path === "" ? 1 : 0.5,
   }))
 
@@ -34,12 +34,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .map(p => ({
       url: `${baseUrl}/products/${p.handle}`,
       lastModified: new Date(),
-      changeFrequency: "daily",
+      changeFrequency: "daily" as const,
       priority: 0.8,
     }))
 
   const collections = await listCollections().then(
-    ({ response }) => response.collections
+    ({ collections }) => collections
   )
 
   const collectionUrls = collections
@@ -47,20 +47,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     .map(c => ({
       url: `${baseUrl}/collections/${c.handle}`,
       lastModified: new Date(),
-      changeFrequency: "weekly",
+      changeFrequency: "weekly" as const,
       priority: 0.6,
     }))
 
-  const categories = await listCategories().then(
-    ({ response }) => response.product_categories
-  )
+  const categories = await listCategories()
 
   const categoryUrls = categories
     .filter(c => c.handle)
     .map(c => ({
       url: `${baseUrl}/categories/${c.handle}`,
       lastModified: new Date(),
-      changeFrequency: "weekly",
+      changeFrequency: "weekly" as const,
       priority: 0.6,
     }))
 
