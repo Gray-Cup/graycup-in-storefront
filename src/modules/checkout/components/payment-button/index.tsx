@@ -1,11 +1,9 @@
 "use client"
 
-import { isCashfree, isManual, isStripe } from "@lib/constants"
-import { initiatePaymentSession } from "@lib/data/cart"
+import { isCashfree, isManual } from "@lib/constants"
 import { placeOrder } from "@lib/data/cart"
 import { HttpTypes } from "@medusajs/types"
 import { Button } from "@medusajs/ui"
-import { useElements, useStripe } from "@stripe/react-stripe-js"
 import React, { useState } from "react"
 import ErrorMessage from "../error-message"
 
@@ -28,14 +26,6 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
   const paymentSession = cart.payment_collection?.payment_sessions?.[0]
 
   switch (true) {
-    case isStripe(paymentSession?.provider_id):
-      return (
-        <StripePaymentButton
-          notReady={notReady}
-          cart={cart}
-          data-testid={dataTestId}
-        />
-      )
     case isCashfree(paymentSession?.provider_id):
       return (
         <CashfreePaymentButton
@@ -44,120 +34,18 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
           data-testid={dataTestId}
         />
       )
+
     case isManual(paymentSession?.provider_id):
       return (
-        <ManualTestPaymentButton notReady={notReady} data-testid={dataTestId} />
+        <ManualTestPaymentButton
+          notReady={notReady}
+          data-testid={dataTestId}
+        />
       )
+
     default:
       return <Button disabled>Select a payment method</Button>
   }
-}
-
-const StripePaymentButton = ({
-  cart,
-  notReady,
-  "data-testid": dataTestId,
-}: {
-  cart: HttpTypes.StoreCart
-  notReady: boolean
-  "data-testid"?: string
-}) => {
-  const [submitting, setSubmitting] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
-
-  const onPaymentCompleted = async () => {
-    await placeOrder()
-      .catch((err) => {
-        setErrorMessage(err.message)
-      })
-      .finally(() => {
-        setSubmitting(false)
-      })
-  }
-
-  const stripe = useStripe()
-  const elements = useElements()
-  const card = elements?.getElement("card")
-
-  const session = cart.payment_collection?.payment_sessions?.find(
-    (s) => s.status === "pending"
-  )
-
-  const disabled = !stripe || !elements ? true : false
-
-  const handlePayment = async () => {
-    setSubmitting(true)
-
-    if (!stripe || !elements || !card || !cart) {
-      setSubmitting(false)
-      return
-    }
-
-    await stripe
-      .confirmCardPayment(session?.data.client_secret as string, {
-        payment_method: {
-          card: card,
-          billing_details: {
-            name:
-              cart.billing_address?.first_name +
-              " " +
-              cart.billing_address?.last_name,
-            address: {
-              city: cart.billing_address?.city ?? undefined,
-              country: cart.billing_address?.country_code ?? undefined,
-              line1: cart.billing_address?.address_1 ?? undefined,
-              line2: cart.billing_address?.address_2 ?? undefined,
-              postal_code: cart.billing_address?.postal_code ?? undefined,
-              state: cart.billing_address?.province ?? undefined,
-            },
-            email: cart.email,
-            phone: cart.billing_address?.phone ?? undefined,
-          },
-        },
-      })
-      .then(({ error, paymentIntent }) => {
-        if (error) {
-          const pi = error.payment_intent
-
-          if (
-            (pi && pi.status === "requires_capture") ||
-            (pi && pi.status === "succeeded")
-          ) {
-            onPaymentCompleted()
-          }
-
-          setErrorMessage(error.message || null)
-          return
-        }
-
-        if (
-          (paymentIntent && paymentIntent.status === "requires_capture") ||
-          paymentIntent.status === "succeeded"
-        ) {
-          return onPaymentCompleted()
-        }
-
-        return
-      })
-  }
-
-  return (
-    <>
-      <Button
-        disabled={disabled || notReady}
-        onClick={handlePayment}
-        size="large"
-        isLoading={submitting}
-        data-testid={dataTestId}
-      >
-        Place order
-      </Button>
-      <ErrorMessage
-        error={errorMessage}
-        data-testid="stripe-payment-error-message"
-      />
-    </>
-  )
 }
 
 const CashfreePaymentButton = ({
@@ -177,76 +65,69 @@ const CashfreePaymentButton = ({
   )
 
   const handlePayment = async () => {
+    if (!session?.data?.paymentSessionId) {
+      setErrorMessage("Payment session not found. Please refresh and try again.")
+      return
+    }
+
     setSubmitting(true)
     setErrorMessage(null)
 
     try {
-      const returnUrl =
-        process.env.NEXT_PUBLIC_CASHFREE_RETURN_URL ||
-        `${window.location.origin}/checkout/payment-callback`
-
-      // Build customer info from cart email and shipping address
-      const customerInfo = cart.email
-        ? {
-            email: cart.email,
-            first_name: cart.shipping_address?.first_name,
-            last_name: cart.shipping_address?.last_name,
-            phone: cart.shipping_address?.phone,
-          }
-        : undefined
-
-      const response = await initiatePaymentSession(cart, {
-        provider_id: "pp_cashfree_cashfree",
-        context: {
-          return_url: returnUrl,
-          // Send customer info
-          customer: customerInfo,
-          // Send addresses
-          shipping_address: cart.shipping_address,
-          billing_address: cart.billing_address,
-          // Send cart email as fallback
-          email: cart.email,
-        },
+      // @ts-ignore
+      const cashfree = window.Cashfree({
+        mode:
+          process.env.NEXT_PUBLIC_CASHFREE_ENV === "production"
+            ? "production"
+            : "sandbox",
       })
 
-      const paymentSession = response?.payment_collection?.payment_sessions?.find(
-        (s: any) => s.provider_id === "pp_cashfree_cashfree"
-      )
-
-      console.log("Payment session created:", paymentSession)
-
-      // Check if payment link exists
-      if (!paymentSession?.data?.paymentLink) {
-        console.error("Payment session data:", paymentSession)
-        throw new Error(
-          "Payment link not generated. Please try again or contact support."
-        )
-      }
-
-      // Redirect to Cashfree payment page
-      const paymentLink = paymentSession.data.paymentLink as string
-      console.log("Redirecting to Cashfree:", paymentLink)
-      window.location.href = paymentLink
-    } catch (err: any) {
-      console.error("Payment initiation error:", err)
-
-      // Set user-friendly error message
-      let userMessage = "Unable to initiate payment. Please try again."
-
-      if (err.message?.includes("payment link")) {
-        userMessage =
-          "Payment link could not be generated. Please refresh and try again."
-      } else if (err.message?.includes("network") || err.message?.includes("fetch")) {
-        userMessage = "Network error. Please check your connection and try again."
-      } else if (err.message?.includes("session")) {
-        userMessage = "Payment session creation failed. Please try again."
-      } else if (err.message) {
-        userMessage = err.message
-      }
-
-      setErrorMessage(userMessage)
+      cashfree.checkout({
+        paymentSessionId: session.data.paymentSessionId,
+        redirectTarget: "_self",
+      })
+    } catch {
+      setErrorMessage("Unable to open payment gateway. Please try again.")
       setSubmitting(false)
     }
+  }
+
+  return (
+    <>
+      <Button
+        disabled={notReady || submitting}
+        isLoading={submitting}
+        onClick={handlePayment}
+        size="large"
+        data-testid={dataTestId}
+      >
+        Pay with Cashfree
+      </Button>
+
+      <ErrorMessage
+        error={errorMessage}
+        data-testid="cashfree-payment-error-message"
+      />
+    </>
+  )
+}
+
+const ManualTestPaymentButton = ({
+  notReady,
+  "data-testid": dataTestId,
+}: {
+  notReady: boolean
+  "data-testid"?: string
+}) => {
+  const [submitting, setSubmitting] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+  const handlePayment = async () => {
+    setSubmitting(true)
+
+    await placeOrder()
+      .catch((err) => setErrorMessage(err.message))
+      .finally(() => setSubmitting(false))
   }
 
   return (
@@ -258,47 +139,9 @@ const CashfreePaymentButton = ({
         size="large"
         data-testid={dataTestId}
       >
-        Pay with Cashfree
-      </Button>
-      <ErrorMessage
-        error={errorMessage}
-        data-testid="cashfree-payment-error-message"
-      />
-    </>
-  )
-}
-
-const ManualTestPaymentButton = ({ notReady }: { notReady: boolean }) => {
-  const [submitting, setSubmitting] = useState(false)
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
-
-  const onPaymentCompleted = async () => {
-    await placeOrder()
-      .catch((err) => {
-        setErrorMessage(err.message)
-      })
-      .finally(() => {
-        setSubmitting(false)
-      })
-  }
-
-  const handlePayment = () => {
-    setSubmitting(true)
-
-    onPaymentCompleted()
-  }
-
-  return (
-    <>
-      <Button
-        disabled={notReady}
-        isLoading={submitting}
-        onClick={handlePayment}
-        size="large"
-        data-testid="submit-order-button"
-      >
         Place order
       </Button>
+
       <ErrorMessage
         error={errorMessage}
         data-testid="manual-payment-error-message"
