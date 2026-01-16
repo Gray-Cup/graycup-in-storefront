@@ -114,8 +114,6 @@ export default async function Footer() {
                 <li>
                   <a
                     href="/contact-us"
-                    target="_blank"
-                    rel="dofollow"
                     className="hover:text-ui-fg-base"
                   >
                     Contact Us
@@ -124,8 +122,6 @@ export default async function Footer() {
                 <li>
                   <a
                     href="refunds-and-conditions"
-                    target="_blank"
-                    rel="noreferrer"
                     className="hover:text-ui-fg-base"
                   >
                     Refunds & Cancellations
