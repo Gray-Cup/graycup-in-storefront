@@ -109,36 +109,75 @@ export default async function Footer() {
               </div>
             )}
             <div className="flex flex-col gap-y-2">
-              <span className="txt-small-plus txt-ui-fg-base">Medusa</span>
+              <span className="txt-small-plus txt-ui-fg-base">Support & Policy</span>
               <ul className="grid grid-cols-1 gap-y-2 text-ui-fg-subtle txt-small">
                 <li>
                   <a
-                    href="https://github.com/medusajs"
+                    href="/contact-us"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="dofollow"
                     className="hover:text-ui-fg-base"
                   >
-                    GitHub
+                    Contact Us
                   </a>
                 </li>
                 <li>
                   <a
-                    href="https://docs.medusajs.com"
+                    href="refunds-and-conditions"
                     target="_blank"
                     rel="noreferrer"
                     className="hover:text-ui-fg-base"
                   >
-                    Documentation
+                    Refunds & Cancellations
                   </a>
                 </li>
                 <li>
                   <a
-                    href="https://github.com/medusajs/nextjs-starter-medusa"
+                    href="/privacy-policy"
+                    className="hover:text-ui-fg-base"
+                  >
+                    Privacy Policy
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/terms-and-conditions"
+                    className="hover:text-ui-fg-base"
+                  >
+                    Terms & Conditions
+                  </a>
+                </li>
+              </ul>
+            </div>
+                        <div className="flex flex-col gap-y-2">
+              <span className="txt-small-plus txt-ui-fg-base">Other Sites</span>
+              <ul className="grid grid-cols-1 gap-y-2 text-ui-fg-subtle txt-small">
+                <li>
+                  <a
+                    href="https://graycup.org"
+                    target="_blank"
+                    rel="dofollow"
+                    className="hover:text-ui-fg-base"
+                  >
+                    Company Website
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://b2b.graycup.in"
                     target="_blank"
                     rel="noreferrer"
                     className="hover:text-ui-fg-base"
                   >
-                    Source code
+                    Bulk Store
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="/about"
+                    className="hover:text-ui-fg-base"
+                  >
+                    About
                   </a>
                 </li>
               </ul>
