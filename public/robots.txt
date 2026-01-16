@@ -1,0 +1,19 @@
+User-agent: *
+Allow: /
+
+# Block Medusa / internal paths
+Disallow: /api/
+Disallow: /store/
+Disallow: /admin/
+Disallow: /auth/
+Disallow: /cart
+Disallow: /checkout
+Disallow: /orders
+Disallow: /account
+Disallow: /customers
+
+# Block query-heavy or duplicate URLs
+Disallow: /*?*
+
+# Sitemap
+Sitemap: https://graycup.in/sitemap.xml
