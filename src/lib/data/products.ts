@@ -13,12 +13,12 @@ export const listProducts = async ({
   regionId,
 }: {
   pageParam?: number
-  queryParams?: HttpTypes.StoreProductListParams
+  queryParams?: HttpTypes.FindParams & HttpTypes.StoreProductParams
   regionId?: string
 }): Promise<{
   response: { products: HttpTypes.StoreProduct[]; count: number }
   nextPage: number | null
-  queryParams?: HttpTypes.StoreProductListParams
+  queryParams?: HttpTypes.FindParams & HttpTypes.StoreProductParams
 }> => {
   const limit = queryParams?.limit || 12
   const _pageParam = Math.max(pageParam, 1)
@@ -89,12 +89,12 @@ export const listProductsWithSort = async ({
   sortBy = "created_at",
 }: {
   page?: number
-  queryParams?: HttpTypes.StoreProductListParams
+  queryParams?: HttpTypes.FindParams & HttpTypes.StoreProductParams
   sortBy?: SortOptions
 }): Promise<{
   response: { products: HttpTypes.StoreProduct[]; count: number }
   nextPage: number | null
-  queryParams?: HttpTypes.StoreProductListParams
+  queryParams?: HttpTypes.FindParams & HttpTypes.StoreProductParams
 }> => {
   const limit = queryParams?.limit || 12
 

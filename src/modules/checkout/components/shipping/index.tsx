@@ -28,8 +28,8 @@ const Shipping: React.FC<ShippingProps> = ({
     Record<string, number>
   >({})
   const [error, setError] = useState<string | null>(null)
-  const [shippingMethodId, setShippingMethodId] = useState<string | undefined>(
-    cart.shipping_methods?.at(-1)?.shipping_option_id ?? undefined
+  const [shippingMethodId, setShippingMethodId] = useState<string | null>(
+    cart.shipping_methods?.at(-1)?.shipping_option_id || null
   )
 
   const searchParams = useSearchParams()
@@ -70,7 +70,7 @@ const Shipping: React.FC<ShippingProps> = ({
 
   const handleSetShippingMethod = async (id: string) => {
     setError(null)
-    let currentId: string | undefined = undefined
+    let currentId: string | null = null
     setIsLoading(true)
     setShippingMethodId((prev) => {
       currentId = prev
@@ -207,7 +207,7 @@ const Shipping: React.FC<ShippingProps> = ({
                 <Text className="txt-medium text-ui-fg-subtle">
                   {cart.shipping_methods?.at(-1)?.name}{" "}
                   {convertToLocale({
-                    amount: cart.shipping_methods?.at(-1)?.amount ?? 0,
+                    amount: cart.shipping_methods.at(-1)?.amount!,
                     currency_code: cart?.currency_code,
                   })}
                 </Text>
