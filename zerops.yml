@@ -15,6 +15,7 @@ zerops:
       buildCommands:
         - yarn
         - yarn build
+        - yarn postbuild
       deployFiles:
         - .next
         - package.json
