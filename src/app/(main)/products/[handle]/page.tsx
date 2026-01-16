@@ -20,7 +20,7 @@ export async function generateMetadata(
 
   const product = await listProducts({
     queryParams: {
-      handle: [handle], // ✅ REQUIRED
+      handle: handle,
     },
   }).then(({ response }) => response.products[0])
 
@@ -44,7 +44,7 @@ export default async function ProductPage({ params }: Props) {
 
   const product = await listProducts({
     queryParams: {
-      handle: [params.handle], // ✅ REQUIRED
+      handle: params.handle,
     },
   }).then(({ response }) => response.products[0])
 
