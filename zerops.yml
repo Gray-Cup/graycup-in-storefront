@@ -42,3 +42,4 @@ zerops:
         NEXT_PUBLIC_INDEX_NAME: products
         NEXT_PUBLIC_SEARCH_API_KEY: ${search_defaultSearchKey}
         NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY: ${medusa_CHANNEL_PUBLISHABLE_KEY}
+        NEXT_PUBLIC_CASHFREE_ENV: production
