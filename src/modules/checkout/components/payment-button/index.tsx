@@ -185,24 +185,66 @@ const CashfreePaymentButton = ({
         process.env.NEXT_PUBLIC_CASHFREE_RETURN_URL ||
         `${window.location.origin}/checkout/payment-callback`
 
+      // Build customer info from cart email and shipping address
+      const customerInfo = cart.email
+        ? {
+            email: cart.email,
+            first_name: cart.shipping_address?.first_name,
+            last_name: cart.shipping_address?.last_name,
+            phone: cart.shipping_address?.phone,
+          }
+        : undefined
+
       const response = await initiatePaymentSession(cart, {
         provider_id: "pp_cashfree_cashfree",
         context: {
           return_url: returnUrl,
+          // Send customer info
+          customer: customerInfo,
+          // Send addresses
+          shipping_address: cart.shipping_address,
+          billing_address: cart.billing_address,
+          // Send cart email as fallback
+          email: cart.email,
         },
       })
 
-      const paymentLink = response?.payment_collection?.payment_sessions?.find(
+      const paymentSession = response?.payment_collection?.payment_sessions?.find(
         (s: any) => s.provider_id === "pp_cashfree_cashfree"
-      )?.data?.paymentLink
+      )
 
-      if (paymentLink) {
-        window.location.href = paymentLink
-      } else {
-        throw new Error("Payment link not generated")
+      console.log("Payment session created:", paymentSession)
+
+      // Check if payment link exists
+      if (!paymentSession?.data?.paymentLink) {
+        console.error("Payment session data:", paymentSession)
+        throw new Error(
+          "Payment link not generated. Please try again or contact support."
+        )
       }
+
+      // Redirect to Cashfree payment page
+      const paymentLink = paymentSession.data.paymentLink as string
+      console.log("Redirecting to Cashfree:", paymentLink)
+      window.location.href = paymentLink
     } catch (err: any) {
-      setErrorMessage(err.message || "Failed to initiate payment")
+      console.error("Payment initiation error:", err)
+
+      // Set user-friendly error message
+      let userMessage = "Unable to initiate payment. Please try again."
+
+      if (err.message?.includes("payment link")) {
+        userMessage =
+          "Payment link could not be generated. Please refresh and try again."
+      } else if (err.message?.includes("network") || err.message?.includes("fetch")) {
+        userMessage = "Network error. Please check your connection and try again."
+      } else if (err.message?.includes("session")) {
+        userMessage = "Payment session creation failed. Please try again."
+      } else if (err.message) {
+        userMessage = err.message
+      }
+
+      setErrorMessage(userMessage)
       setSubmitting(false)
     }
   }
