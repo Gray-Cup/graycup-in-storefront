@@ -230,8 +230,57 @@ export async function initiatePaymentSession(
     ...(await getAuthHeaders()),
   }
 
+  // Build context with customer and address data from cart
+  // Medusa does NOT automatically pass this to the payment provider
+  const enrichedData = {
+    ...data,
+    context: {
+      ...data.context,
+      // Pass shipping address from cart
+      shipping_address: cart.shipping_address
+        ? {
+            first_name: cart.shipping_address.first_name,
+            last_name: cart.shipping_address.last_name,
+            address_1: cart.shipping_address.address_1,
+            address_2: cart.shipping_address.address_2,
+            city: cart.shipping_address.city,
+            postal_code: cart.shipping_address.postal_code,
+            province: cart.shipping_address.province,
+            country_code: cart.shipping_address.country_code,
+            phone: cart.shipping_address.phone,
+          }
+        : undefined,
+      // Pass billing address from cart
+      billing_address: cart.billing_address
+        ? {
+            first_name: cart.billing_address.first_name,
+            last_name: cart.billing_address.last_name,
+            address_1: cart.billing_address.address_1,
+            address_2: cart.billing_address.address_2,
+            city: cart.billing_address.city,
+            postal_code: cart.billing_address.postal_code,
+            province: cart.billing_address.province,
+            country_code: cart.billing_address.country_code,
+            phone: cart.billing_address.phone,
+          }
+        : undefined,
+      // Pass email from cart
+      email: cart.email,
+      // Pass customer data if available
+      customer: cart.customer
+        ? {
+            id: cart.customer.id,
+            email: cart.customer.email,
+            first_name: cart.customer.first_name,
+            last_name: cart.customer.last_name,
+            phone: cart.customer.phone,
+          }
+        : undefined,
+    },
+  }
+
   return sdk.store.payment
-    .initiatePaymentSession(cart, data, {}, headers)
+    .initiatePaymentSession(cart, enrichedData, {}, headers)
     .then(async (resp) => {
       const cartCacheTag = await getCacheTag("carts")
       revalidateTag(cartCacheTag)
