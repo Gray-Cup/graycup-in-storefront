@@ -76,10 +76,7 @@ const CashfreePaymentButton = ({
     try {
       // @ts-ignore
       const cashfree = window.Cashfree({
-        mode:
-          process.env.NEXT_PUBLIC_CASHFREE_ENV === "production"
-            ? "production"
-            : "sandbox",
+        mode: "production",
       })
 
       cashfree.checkout({
