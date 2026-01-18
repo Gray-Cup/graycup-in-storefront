@@ -375,6 +375,12 @@ export async function setAddresses(currentState: unknown, formData: FormData) {
       throw new Error("No existing cart found when setting addresses")
     }
 
+    // Validate phone number is provided
+    const phone = formData.get("shipping_address.phone") as string
+    if (!phone || phone.trim() === "") {
+      throw new Error("Phone number is required")
+    }
+
     const data = {
       shipping_address: {
         first_name: formData.get("shipping_address.first_name"),
