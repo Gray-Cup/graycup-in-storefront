@@ -937,7 +937,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@medusajs/icons@npm:2.12.5, @medusajs/icons@npm:^2.12.5":
+"@medusajs/icons@npm:2.12.5":
   version: 2.12.5
   resolution: "@medusajs/icons@npm:2.12.5"
   peerDependencies:
@@ -946,7 +946,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@medusajs/js-sdk@latest":
+"@medusajs/js-sdk@npm:2.12.5":
   version: 2.12.5
   resolution: "@medusajs/js-sdk@npm:2.12.5"
   dependencies:
@@ -956,7 +956,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@medusajs/types@latest":
+"@medusajs/types@npm:2.12.5":
   version: 2.12.5
   resolution: "@medusajs/types@npm:2.12.5"
   dependencies:
@@ -973,7 +973,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@medusajs/ui-preset@latest":
+"@medusajs/ui-preset@npm:2.12.5":
   version: 2.12.5
   resolution: "@medusajs/ui-preset@npm:2.12.5"
   dependencies:
@@ -985,7 +985,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@medusajs/ui@latest":
+"@medusajs/ui@npm:4.0.33":
   version: 4.0.33
   resolution: "@medusajs/ui@npm:4.0.33"
   dependencies:
@@ -7616,11 +7616,11 @@ __metadata:
   dependencies:
     "@babel/core": ^7.17.5
     "@headlessui/react": ^2.2.0
-    "@medusajs/icons": ^2.12.5
-    "@medusajs/js-sdk": latest
-    "@medusajs/types": latest
-    "@medusajs/ui": latest
-    "@medusajs/ui-preset": latest
+    "@medusajs/icons": 2.12.5
+    "@medusajs/js-sdk": 2.12.5
+    "@medusajs/types": 2.12.5
+    "@medusajs/ui": 4.0.33
+    "@medusajs/ui-preset": 2.12.5
     "@meilisearch/instant-meilisearch": ^0.24.0
     "@radix-ui/react-accordion": ^1.2.1
     "@stripe/react-stripe-js": ^1.7.2
