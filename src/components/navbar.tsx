@@ -16,13 +16,13 @@ export function Navbar() {
           {/* LEFT */}
           <div className="flex items-center gap-6">
             <Link href="/" className="flex items-center gap-3">
-              {/* <Image
+              <Image
                 src="/logo.svg"
                 alt="Gray Cup"
                 width={45}
                 height={45}
                 draggable={false}
-              /> */}
+              />
               <span className="text-xl font-semibold text-nowrap tracking-tight">
                 Gray Cup
               </span>
