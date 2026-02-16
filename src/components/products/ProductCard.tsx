@@ -4,8 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import type { Product } from "@/data/products";
-import { useCurrency } from "@/components/currency-provider";
-import { convertPrice, CURRENCIES } from "@/lib/currency";
+import { CURRENCY } from "@/lib/currency";
 
 type ProductCardProps = {
   product: Product;
@@ -13,9 +12,7 @@ type ProductCardProps = {
 };
 
 export function ProductCard({ product, showPrice = true }: ProductCardProps) {
-  const { currency } = useCurrency();
-  const config = CURRENCIES[currency];
-  const minPriceConverted = convertPrice(product.priceRange.min, currency);
+  const minPrice = Math.min(...product.variants.map((v) => v.price));
 
   return (
     <Link href={`/products/${product.slug}`}>
@@ -41,18 +38,10 @@ export function ProductCard({ product, showPrice = true }: ProductCardProps) {
             {product.name}
           </h3>
           {showPrice && (
-            <div className="flex items-center justify-between text-xs text-muted-foreground mt-1">
-              <span>
-                From {config.symbol}
-                {currency === "INR"
-                  ? minPriceConverted
-                  : minPriceConverted.toFixed(2)}
-                /{product.minimumOrder.unit}
-              </span>
-              <span>
-                MOQ: {product.minimumOrder.quantity} {product.minimumOrder.unit}
-              </span>
-            </div>
+            <p className="text-sm text-muted-foreground mt-1">
+              From {CURRENCY.symbol}
+              {minPrice.toLocaleString(CURRENCY.locale)}
+            </p>
           )}
         </div>
       </Card>

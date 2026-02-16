@@ -57,30 +57,19 @@ export default function AboutPage() {
           </p>
 
           <h3 className="text-lg md:text-xl font-semibold text-neutral-800 mt-4 mb-2">
-            Other Sites
+            Find Us Online
           </h3>
           <p>
-            <span className="font-semibold">Online Store for Consumers</span>:{" "}
+            <span className="font-semibold">Shop Online</span>:{" "}
             <a href="https://graycup.in/" className="link" target="_blank">
               graycup.in
             </a>
-            (India Only)
+            {" "}(India Only)
           </p>
           <p>
-            <span className="font-semibold">Online Store for Businesses</span>:{" "}
-            <a href="https://b2b.graycup.in/" className="link" target="_blank">
-              b2b.graycup.in
-            </a>
-            (Worldwide)
-          </p>
-          <p>
-            <span className="font-semibold">IndiaMart</span>:{" "}
-            <a
-              href="https://www.indiamart.com/gray-cup-enterprises/"
-              className="link"
-              target="_blank"
-            >
-              indiamart.com/gray-cup-enterprises
+            <span className="font-semibold">Company Website</span>:{" "}
+            <a href="https://graycup.org/" className="link" target="_blank">
+              graycup.org
             </a>
           </p>
         </div>

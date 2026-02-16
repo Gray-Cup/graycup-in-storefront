@@ -29,13 +29,13 @@ function generateProductItem(product: Product, baseUrl: string): string {
     : `${baseUrl}${product.image}`;
 
   const priceKRW = convertToKRW(product.priceRange.min);
-  const gradesText =
-    product.grades.length > 0 ? ` Available grades: ${product.grades.join(", ")}.` : "";
+  const variantsText =
+    product.variants.length > 0 ? ` Available options: ${product.variants.map(v => v.name).join(", ")}.` : "";
 
   return `    <item>
       <g:id>${escapeXml(product.sku)}</g:id>
-      <g:title>${escapeXml(product.name)} - Wholesale ${product.category}</g:title>
-      <g:description>${escapeXml(product.description + gradesText)}</g:description>
+      <g:title>${escapeXml(product.name)} - ${product.category}</g:title>
+      <g:description>${escapeXml(product.description + variantsText)}</g:description>
       <g:link>${productUrl}</g:link>
       <g:image_link>${imageUrl}</g:image_link>
       <g:availability>${product.availability}</g:availability>
@@ -60,9 +60,9 @@ function generateFeed(products: Product[], baseUrl: string): string {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
   <channel>
-    <title>Gray Cup B2B - South Korea (KRW)</title>
+    <title>Gray Cup - South Korea (KRW)</title>
     <link>${baseUrl}</link>
-    <description>Premium wholesale tea and coffee products for South Korea</description>
+    <description>Tea and coffee products from India for South Korea</description>
 ${items}
   </channel>
 </rss>`;

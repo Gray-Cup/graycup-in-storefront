@@ -30,7 +30,7 @@ export function OrganizationSchema() {
       addressCountry: "IN",
     },
     legalName: "Gray Cup Enterprises Private Limited",
-    additionalType: "http://www.productontology.org/id/Wholesaler",
+    additionalType: "http://schema.org/LocalBusiness",
     hasCredential: {
       "@type": "EducationalOccupationalCredential",
       credentialCategory: "certification",

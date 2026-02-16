@@ -1,12 +1,18 @@
 "use client";
 
 import React from "react";
-import { CurrencyProvider } from "@/components/currency-provider";
+import { CartProvider } from "@/components/cart-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 interface RootProvidersProps {
   children: React.ReactNode;
 }
 
 export default function RootProviders({ children }: RootProvidersProps) {
-  return <CurrencyProvider>{children}</CurrencyProvider>;
+  return (
+    <CartProvider>
+      {children}
+      <Toaster />
+    </CartProvider>
+  );
 }

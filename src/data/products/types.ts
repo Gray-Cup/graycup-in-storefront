@@ -1,5 +1,10 @@
 export type ProductAvailability = "in_stock" | "out_of_stock" | "preorder";
 
+export type ProductVariant = {
+  name: string;
+  price: number;
+};
+
 export type Product = {
   slug: string;
   name: string;
@@ -19,7 +24,7 @@ export type Product = {
     quantity: number;
     unit: string;
   };
-  grades: string[];
+  variants: ProductVariant[];
   packaging: string[];
   // Google Merchant Center fields
   sku: string;

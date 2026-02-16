@@ -50,12 +50,12 @@ function generateProductItem(product: Product, baseUrl: string): string {
     ? product.image
     : `${baseUrl}${product.image}`;
 
-  const gradesText = product.grades.length > 0 ? ` Available grades: ${product.grades.join(", ")}.` : "";
+  const variantsText = product.variants.length > 0 ? ` Available options: ${product.variants.map(v => v.name).join(", ")}.` : "";
 
   return `<item>
       <g:id>${escapeXml(product.sku)}</g:id>
-      <g:title>${escapeXml(product.name)} - Wholesale ${product.category}</g:title>
-      <g:description>${escapeXml(product.description + gradesText)}</g:description>
+      <g:title>${escapeXml(product.name)} - ${product.category}</g:title>
+      <g:description>${escapeXml(product.description + variantsText)}</g:description>
       <g:link>${productUrl}</g:link>
       <g:image_link>${imageUrl}</g:image_link>
       <g:availability>${mapFeedAvailability(product.availability)}</g:availability>
@@ -69,11 +69,10 @@ function generateProductItem(product: Product, baseUrl: string): string {
       <g:unit_pricing_measure>1 kg</g:unit_pricing_measure>
       <g:unit_pricing_base_measure>1 kg</g:unit_pricing_base_measure>
       ${generateShippingEntries()}
-      <g:custom_label_0>B2B</g:custom_label_0>
-      <g:custom_label_1>${escapeXml(product.category)}</g:custom_label_1>
-      <g:custom_label_2>MOQ_${product.minimumOrder.quantity}${product.minimumOrder.unit}</g:custom_label_2>
-      <g:custom_label_3>${escapeXml(product.grades[0] || "Standard")}</g:custom_label_3>
-      <g:custom_label_4>${escapeXml(product.grades.join(", "))}</g:custom_label_4>
+      <g:custom_label_0>${escapeXml(product.category)}</g:custom_label_0>
+      <g:custom_label_1>MOQ_${product.minimumOrder.quantity}${product.minimumOrder.unit}</g:custom_label_1>
+      <g:custom_label_2>${escapeXml(product.variants[0]?.name || "Standard")}</g:custom_label_2>
+      <g:custom_label_3>${escapeXml(product.variants.map(v => v.name).join(", "))}</g:custom_label_3>
     </item>`;
 }
 
@@ -83,9 +82,9 @@ function generateProductFeed(products: Product[], baseUrl: string): string {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
   <channel>
-    <title>Gray Cup B2B - Wholesale Tea and Coffee Products</title>
+    <title>Gray Cup - Tea and Coffee</title>
     <link>${baseUrl}</link>
-    <description>Premium wholesale tea and coffee products from India for businesses worldwide.</description>
+    <description>Tea and coffee products from India, sustainably sourced and ethically traded.</description>
     ${items.join("\n    ")}
   </channel>
 </rss>`;

@@ -37,22 +37,22 @@ export async function generateMetadata({
   const baseUrl = "https://b2b.graycup.in";
   const productUrl = `${baseUrl}/products/${slug}`;
 
-  const seoDescription = `Buy ${product.name} in bulk from Gray Cup B2B. ${product.description} Price: ₹${product.priceRange.min}-₹${product.priceRange.max} ${product.priceRange.unit}. MOQ: ${product.minimumOrder.quantity} ${product.minimumOrder.unit}.`;
+  const seoDescription = `Buy ${product.name} from Gray Cup. ${product.description} Price: ₹${product.priceRange.min}-₹${product.priceRange.max} ${product.priceRange.unit}.`;
 
   return {
-    title: `${product.name} | Wholesale ${product.category} Supplier India - Gray Cup B2B`,
+    title: `${product.name} | Premium ${product.category} - Gray Cup`,
     description: seoDescription,
     openGraph: {
-      title: `${product.name} | Wholesale ${product.category} - Gray Cup B2B`,
+      title: `${product.name} | Premium ${product.category} - Gray Cup`,
       description: seoDescription,
       url: productUrl,
-      siteName: "Gray Cup B2B",
+      siteName: "Gray Cup",
       type: "website",
       locale: "en_IN",
     },
     twitter: {
       card: "summary_large_image",
-      title: `${product.name} | Wholesale ${product.category} - Gray Cup B2B`,
+      title: `${product.name} | Premium ${product.category} - Gray Cup`,
       description: seoDescription,
     },
     alternates: {
@@ -119,7 +119,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </div>
             </div>
 
-            {/* Right Column - Calculator First, Then Details */}
+            {/* Right Column - Product Details */}
             <div className="space-y-6">
               {/* Product Header */}
               <div>
@@ -129,31 +129,19 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 <p className="text-gray-600">{product.description}</p>
               </div>
 
-              {/* Product Specs - Quick Info */}
-              <div className="grid grid-cols-2 gap-4 py-4 border-y border-gray-200">
-                <div>
-                  <p className="text-sm text-muted-foreground mb-1">
-                    Price Range
-                  </p>
-                  <p className="font-semibold">
-                    <PriceDisplay
-                      minPrice={product.priceRange.min}
-                      maxPrice={product.priceRange.max}
-                      unit={product.priceRange.unit}
-                    />
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground mb-1">
-                    Minimum Order
-                  </p>
-                  <p className="font-semibold">
-                    {product.minimumOrder.quantity} {product.minimumOrder.unit}
-                  </p>
-                </div>
+              {/* Price */}
+              <div className="py-4 border-y border-gray-200">
+                <p className="text-sm text-muted-foreground mb-1">Price</p>
+                <p className="text-2xl font-bold">
+                  <PriceDisplay
+                    minPrice={product.priceRange.min}
+                    maxPrice={product.priceRange.max}
+                    unit={product.priceRange.unit}
+                  />
+                </p>
               </div>
 
-              {/* Price Calculator with Share Button and Quote Request */}
+              {/* Add to Cart */}
               <ProductConfigurator product={product} />
 
               {/* Accordions for Product Details */}
@@ -167,17 +155,17 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="grades">
-                  <AccordionTrigger>Available Grades</AccordionTrigger>
+                <AccordionItem value="variants">
+                  <AccordionTrigger>Available Options</AccordionTrigger>
                   <AccordionContent>
                     <div className="flex flex-wrap gap-2">
-                      {product.grades.map((grade) => (
+                      {product.variants.map((variant) => (
                         <Badge
-                          key={grade}
+                          key={variant.name}
                           variant="outline"
                           className="bg-white"
                         >
-                          {grade}
+                          {variant.name}
                         </Badge>
                       ))}
                     </div>

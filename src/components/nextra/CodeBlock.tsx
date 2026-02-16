@@ -97,7 +97,7 @@ export function CodeBlock({
                     className={cn(
                       "table-row",
                       highlightLines.includes(index + 1) &&
-                        "bg-yellow-100 dark:bg-yellow-900/20",
+                        "bg-yellow-100",
                     )}
                   >
                     <span className="table-cell select-none w-8 pr-4 text-right text-muted-foreground/60 border-r border-border">

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { CurrencySelector } from "@/components/currency-selector";
+import { CartButton } from "@/components/cart-button";
 
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -24,9 +24,6 @@ export function Navbar() {
                 draggable={false}
               /> */}
               <span className="text-xl font-semibold text-nowrap tracking-tight">
-                <span className="text-white bg-green-700 px-2 py-1 rounded-md text-xl">
-                  B2B
-                </span>{" "}
                 Gray Cup
               </span>
             </Link>
@@ -53,7 +50,7 @@ export function Navbar() {
 
           {/* RIGHT */}
           <div className="flex items-center gap-2">
-            <CurrencySelector />
+            <CartButton />
             <a
               id="store-link"
               href="/contact"

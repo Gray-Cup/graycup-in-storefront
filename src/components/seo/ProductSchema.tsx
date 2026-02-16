@@ -71,8 +71,8 @@ export function ProductSchema({ product }: ProductSchemaProps) {
     additionalProperty: [
       {
         "@type": "PropertyValue",
-        name: "Available Grades",
-        value: product.grades.join(", "),
+        name: "Available Options",
+        value: product.variants.map((v) => v.name).join(", "),
       },
       {
         "@type": "PropertyValue",

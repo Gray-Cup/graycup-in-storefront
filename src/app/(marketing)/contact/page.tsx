@@ -12,8 +12,7 @@ export default function ContactPage() {
             Contact Gray Cup
           </h1>
           <p className="text-muted-foreground">
-            Have a question or want to do business? There is always a way to
-            reach us.
+            Have a question or need help? We're here for you.
           </p>
         </div>
 
@@ -52,17 +51,17 @@ export default function ContactPage() {
             </p>
           </div>
 
-          {/* Sales & Purchases */}
+          {/* Customer Support */}
           <div className="p-4 border rounded-lg">
-            <h2 className="font-semibold text-black mb-1">Sales & Purchases</h2>
+            <h2 className="font-semibold text-black mb-1">Customer Support</h2>
             <p className="text-sm text-muted-foreground mb-3">
               Response within 48 hours.
             </p>
             <a
-              href="mailto:bulk@graycup.org"
+              href="mailto:support@graycup.org"
               className="text-sm text-black underline underline-offset-4 hover:text-neutral-600"
             >
-              bulk@graycup.org
+              support@graycup.org
             </a>
           </div>
 
