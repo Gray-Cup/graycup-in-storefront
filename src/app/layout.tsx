@@ -129,7 +129,7 @@ export default function RootLayout({
         <SpeedInsights />
         <RootProviders>{children}</RootProviders>
         {/* <UserJotWidget /> */}
-        <WhatsappWidget />
+        {/* <WhatsappWidget /> */}
         <Floating />
         {/* <IntercomChat /> */}
         {/* <Script id="crisp-chat" strategy="afterInteractive">
