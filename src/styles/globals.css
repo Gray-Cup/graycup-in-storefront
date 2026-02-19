@@ -252,3 +252,60 @@ textarea {
   text-decoration: underline;
   color: var(--color-blue-600);
 }
+
+/* Guide / blog prose styles */
+.guide-prose h2 {
+  @apply text-2xl md:text-3xl font-semibold text-neutral-800 mt-10 mb-4 leading-tight;
+}
+
+.guide-prose h3 {
+  @apply text-xl md:text-2xl font-medium text-neutral-800 mt-8 mb-3 leading-tight;
+}
+
+.guide-prose h4 {
+  @apply text-lg font-medium text-neutral-700 mt-6 mb-2;
+}
+
+.guide-prose p {
+  @apply text-neutral-700 leading-relaxed mb-5 text-base md:text-lg;
+}
+
+.guide-prose ul {
+  @apply list-disc pl-6 mb-5 space-y-2;
+}
+
+.guide-prose ol {
+  @apply list-decimal pl-6 mb-5 space-y-2;
+}
+
+.guide-prose li {
+  @apply text-neutral-700 leading-relaxed text-base md:text-lg;
+}
+
+.guide-prose a {
+  @apply text-blue-600 underline hover:text-blue-800 transition-colors;
+}
+
+.guide-prose strong {
+  @apply font-semibold text-neutral-900;
+}
+
+.guide-prose em {
+  @apply italic;
+}
+
+.guide-prose blockquote {
+  @apply border-l-4 border-neutral-300 pl-4 italic text-neutral-600 my-6;
+}
+
+.guide-prose code {
+  @apply bg-neutral-100 text-neutral-800 rounded px-1.5 py-0.5 text-sm font-mono;
+}
+
+.guide-prose pre {
+  @apply bg-neutral-900 text-neutral-100 rounded-xl p-5 my-6 overflow-x-auto text-sm;
+}
+
+.guide-prose hr {
+  @apply border-neutral-200 my-10;
+}
