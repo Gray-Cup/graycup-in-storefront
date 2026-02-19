@@ -1,31 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardDescription,
-} from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import { FaGithub, FaLinkedin, FaGlobeAsia, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { IoIosMail } from "react-icons/io";
 
-type Tier = {
-  name: string;
-  price: string;
-  cta: string;
-  ctaVariant?: "default" | "blue" | "red";
-  features: string[];
-  flagText?: string;
-};
-
-/* ---------- Page ---------- */
 export default function AboutPage() {
   return (
     <div className="min-h-screen py-20 px-4 lg:px-6">

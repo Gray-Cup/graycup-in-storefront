@@ -34,6 +34,7 @@ export function Navbar() {
               {[
                 ["Products", "/products"],
                 ["Accessories", "/accessories"],
+                ["Wholesale", "/wholesale"],
                 ["New Product Request", "/new-product-request"],
                 ["Feedback", "/feedback"],
                 ["About Us", "/about"],
@@ -88,6 +89,7 @@ export function Navbar() {
             {[
               ["Products", "/products"],
               ["Accessories", "/accessories"],
+              ["Wholesale", "/wholesale"],
               ["Sample Request", "/sample-request"],
               ["New Product Request", "/new-product-request"],
               ["Feedback", "/feedback"],
@@ -103,20 +105,6 @@ export function Navbar() {
               </Link>
             ))}
           </nav>
-
-          {/* Actions */}
-          <div className="mt-auto flex flex-col gap-2 pt-6">
-            <Link
-              href="https://graycup.in/"
-              target="_blank"
-              rel="noopener"
-              onClick={() => setMenuOpen(false)}
-            >
-              <Button variant="blue" size="sm" className="w-full">
-                Visit Consumer Store
-              </Button>
-            </Link>
-          </div>
         </aside>
       </div>
     </>
