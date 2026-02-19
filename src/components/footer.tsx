@@ -16,7 +16,7 @@ export default function Footer() {
 
   const resourceLinks = [
     { href: "https://graycup.org", label: "Company Site" },
-    { href: "https://graycup.in/", label: "Shop" },
+    { href: "https://b2b.graycup.in/", label: "Buy Bulk" },
     { href: "https://status.graycup.org/", label: "Status" },
     { href: "/sitemap.xml", label: "Sitemap" },
   ];
