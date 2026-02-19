@@ -50,8 +50,8 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const {
-      company,
-      name,
+      firstName,
+      lastName,
       email,
       feedbackType,
       rating,
@@ -82,8 +82,8 @@ export async function POST(request: NextRequest) {
     const { error: dbError } = await supabase
       .from("feedback_submissions")
       .insert({
-        company: company?.trim() || "",
-        name: name?.trim() || "",
+        first_name: firstName?.trim() || "",
+        last_name: lastName?.trim() || "",
         email: email.trim().toLowerCase(),
         feedback_type: feedbackType || "",
         rating: rating || "",
@@ -111,13 +111,13 @@ export async function POST(request: NextRequest) {
             color: 10181046,
             fields: [
               {
-                name: "Company",
-                value: company || "Not provided",
+                name: "Name",
+                value: `${firstName || ""} ${lastName || ""}`.trim() || "Anonymous",
                 inline: true,
               },
               {
-                name: "Contact",
-                value: `${name || "Anonymous"} (${email})`,
+                name: "Email",
+                value: email,
                 inline: true,
               },
               {

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CartButton } from "@/components/cart-button";
@@ -33,7 +33,6 @@ export function Navbar() {
             <nav className="hidden md:flex gap-1 text-sm font-medium">
               {[
                 ["Products", "/products"],
-                ["Sample Request", "/sample-request"],
                 ["New Product Request", "/new-product-request"],
                 ["Feedback", "/feedback"],
               ].map(([label, href]) => (
@@ -51,48 +50,6 @@ export function Navbar() {
           {/* RIGHT */}
           <div className="flex items-center gap-2">
             <CartButton />
-            <a
-              id="store-link"
-              href="/contact"
-              className="hidden lg:inline-block"
-            >
-              <Button variant="gray" size="sm">
-                Contact Methods
-              </Button>
-            </a>
-            <a
-              id="store-link"
-              href="https://graycup.in/"
-              target="_blank"
-              rel="noopener"
-              className="hidden lg:inline-block"
-            >
-              <Button variant="blue" size="sm">
-                Visit Consumer Store
-              </Button>
-            </a>
-
-            {/* Hamburger — visible whenever anything is hidden */}
-            <button
-              className="lg:hidden inline-flex items-center justify-center rounded-md p-2 hover:bg-neutral-100"
-              onClick={() => setMenuOpen(true)}
-              aria-label="Open menu"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
           </div>
         </div>
       </header>

@@ -18,9 +18,9 @@ setInterval(() => {
 }, RATE_LIMIT_WINDOW);
 
 interface ProductRequestData {
-  company: string;
+  firstName: string;
+  lastName: string;
   email: string;
-  name: string;
   phone: string;
   category: string;
   productName: string;
@@ -105,11 +105,19 @@ function validateProductRequestData(data: unknown): {
   const body = data as Record<string, unknown>;
 
   if (
-    !body.name ||
-    typeof body.name !== "string" ||
-    body.name.trim().length === 0
+    !body.firstName ||
+    typeof body.firstName !== "string" ||
+    body.firstName.trim().length === 0
   ) {
-    errors.push("Contact name is required");
+    errors.push("First name is required");
+  }
+
+  if (
+    !body.lastName ||
+    typeof body.lastName !== "string" ||
+    body.lastName.trim().length === 0
+  ) {
+    errors.push("Last name is required");
   }
 
   if (!body.email || typeof body.email !== "string") {
@@ -119,14 +127,6 @@ function validateProductRequestData(data: unknown): {
     if (!emailRegex.test(body.email)) {
       errors.push("Invalid email format");
     }
-  }
-
-  if (
-    !body.company ||
-    typeof body.company !== "string" ||
-    body.company.trim().length === 0
-  ) {
-    errors.push("Company name is required");
   }
 
   if (
@@ -208,9 +208,9 @@ export async function POST(request: NextRequest) {
     }
 
     const requestData: ProductRequestData = {
-      company: body.company.trim(),
+      firstName: body.firstName.trim(),
+      lastName: body.lastName.trim(),
       email: body.email.trim().toLowerCase(),
-      name: body.name.trim(),
       phone: body.phone.trim(),
       category: body.category || "",
       productName: body.productName.trim(),
@@ -220,9 +220,9 @@ export async function POST(request: NextRequest) {
     };
 
     const { error: dbError } = await supabase.from("product_requests").insert({
-      company: requestData.company,
+      first_name: requestData.firstName,
+      last_name: requestData.lastName,
       email: requestData.email,
-      name: requestData.name,
       phone: requestData.phone,
       category: requestData.category,
       product_name: requestData.productName,

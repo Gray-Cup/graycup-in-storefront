@@ -138,8 +138,8 @@ export type Database = {
       feedback_submissions: {
         Row: {
           id: string;
-          company: string;
-          name: string;
+          first_name: string;
+          last_name: string;
           email: string;
           feedback_type: string;
           rating: string;
@@ -149,8 +149,8 @@ export type Database = {
         };
         Insert: {
           id?: string;
-          company: string;
-          name: string;
+          first_name: string;
+          last_name: string;
           email: string;
           feedback_type: string;
           rating: string;
@@ -160,8 +160,8 @@ export type Database = {
         };
         Update: {
           id?: string;
-          company?: string;
-          name?: string;
+          first_name?: string;
+          last_name?: string;
           email?: string;
           feedback_type?: string;
           rating?: string;
@@ -174,9 +174,9 @@ export type Database = {
       product_requests: {
         Row: {
           id: string;
-          company: string;
+          first_name: string;
+          last_name: string;
           email: string;
-          name: string;
           phone: string;
           category: string;
           product_name: string;
@@ -188,9 +188,9 @@ export type Database = {
         };
         Insert: {
           id?: string;
-          company: string;
+          first_name: string;
+          last_name: string;
           email: string;
-          name: string;
           phone: string;
           category: string;
           product_name: string;
@@ -202,9 +202,9 @@ export type Database = {
         };
         Update: {
           id?: string;
-          company?: string;
+          first_name?: string;
+          last_name?: string;
           email?: string;
-          name?: string;
           phone?: string;
           category?: string;
           product_name?: string;

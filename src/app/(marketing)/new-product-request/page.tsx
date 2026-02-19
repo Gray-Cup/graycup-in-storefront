@@ -34,9 +34,9 @@ export default function NewProductRequestPage() {
 
     const formData = new FormData(e.currentTarget);
     const data = {
-      company: formData.get("company") as string,
+      firstName: formData.get("firstName") as string,
+      lastName: formData.get("lastName") as string,
       email: formData.get("email") as string,
-      name: formData.get("name") as string,
       phone: formData.get("phone") as string,
       category:
         selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1),
@@ -97,31 +97,26 @@ export default function NewProductRequestPage() {
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="company">Company Name</Label>
-              <Input
-                id="company"
-                name="company"
-                placeholder="Your company name"
-                required
-              />
+              <Label htmlFor="firstName">First Name</Label>
+              <Input id="firstName" name="firstName" placeholder="First name" required />
             </div>
 
+            <div className="space-y-2">
+              <Label htmlFor="lastName">Last Name</Label>
+              <Input id="lastName" name="lastName" placeholder="Last name" required />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email Address</Label>
               <Input
                 id="email"
                 name="email"
                 type="email"
-                placeholder="you@company.com"
+                placeholder="you@example.com"
                 required
               />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">Contact Name</Label>
-              <Input id="name" name="name" placeholder="Your name" required />
             </div>
 
             <div className="space-y-2">
