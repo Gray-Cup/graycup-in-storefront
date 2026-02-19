@@ -9,7 +9,6 @@ import { ChevronDown } from "lucide-react";
 
 const dropdowns: Record<string, [string, string][]> = {
   Others: [
-    ["Sample Request", "/sample-request"],
     ["Feedback", "/feedback"],
   ],
   Learn: [
@@ -151,7 +150,6 @@ export function Navbar() {
               ["Products", "/products"],
               ["Accessories", "/accessories"],
               ["Wholesale", "/wholesale"],
-              ["Sample Request", "/sample-request"],
               ["New Product Request", "/new-product-request"],
               ["Feedback", "/feedback"],
               ["About Us", "/about"],
