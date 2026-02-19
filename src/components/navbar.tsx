@@ -33,8 +33,10 @@ export function Navbar() {
             <nav className="hidden md:flex gap-1 text-sm font-medium">
               {[
                 ["Products", "/products"],
+                ["Accessories", "/accessories"],
                 ["New Product Request", "/new-product-request"],
                 ["Feedback", "/feedback"],
+                ["About Us", "/about"],
               ].map(([label, href]) => (
                 <Link
                   key={href}
@@ -85,9 +87,11 @@ export function Navbar() {
           <nav className="flex flex-col gap-2 text-sm font-medium">
             {[
               ["Products", "/products"],
+              ["Accessories", "/accessories"],
               ["Sample Request", "/sample-request"],
               ["New Product Request", "/new-product-request"],
               ["Feedback", "/feedback"],
+              ["About Us", "/about"],
             ].map(([label, href]) => (
               <Link
                 key={href}
