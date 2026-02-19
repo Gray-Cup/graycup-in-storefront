@@ -5,6 +5,52 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CartButton } from "@/components/cart-button";
+import { ChevronDown } from "lucide-react";
+
+const dropdowns: Record<string, [string, string][]> = {
+  Others: [
+    ["Sample Request", "/sample-request"],
+    ["Feedback", "/feedback"],
+  ],
+  Learn: [
+    ["Guides", "/guides"],
+  ],
+};
+
+function NavDropdown({ label, items }: { label: string; items: [string, string][] }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      <button className="flex items-center gap-0.5 rounded-md px-2 py-2 hover:bg-neutral-100 text-sm font-medium cursor-pointer">
+        {label}
+        <ChevronDown
+          className={`h-3.5 w-3.5 mt-0.5 transition-transform duration-150 ${open ? "rotate-180" : ""}`}
+        />
+      </button>
+
+      {open && (
+        <div className="absolute left-0 top-full pt-1 z-50">
+          <div className="bg-white rounded-md shadow-lg border border-neutral-200 py-1 min-w-[160px]">
+            {items.map(([itemLabel, href]) => (
+              <Link
+                key={href}
+                href={href}
+                className="block px-4 py-2 text-sm hover:bg-neutral-100"
+              >
+                {itemLabel}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -30,13 +76,12 @@ export function Navbar() {
             <p className="opacity-20">|</p>
 
             {/* Tablet-visible links */}
-            <nav className="hidden md:flex gap-1 text-sm font-medium">
+            <nav className="hidden md:flex gap-1 text-sm font-medium items-center">
               {[
                 ["Products", "/products"],
                 ["Accessories", "/accessories"],
                 ["Wholesale", "/wholesale"],
                 ["New Product Request", "/new-product-request"],
-                ["Feedback", "/feedback"],
                 ["About Us", "/about"],
               ].map(([label, href]) => (
                 <Link
@@ -47,12 +92,28 @@ export function Navbar() {
                   {label}
                 </Link>
               ))}
+
+              {Object.entries(dropdowns).map(([label, items]) => (
+                <NavDropdown key={label} label={label} items={items} />
+              ))}
             </nav>
           </div>
 
           {/* RIGHT */}
           <div className="flex items-center gap-2">
             <CartButton />
+            {/* Mobile menu button */}
+            <button
+              className="md:hidden rounded-md p-2 hover:bg-neutral-100 cursor-pointer"
+              onClick={() => setMenuOpen(true)}
+              aria-label="Open menu"
+            >
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor">
+                <rect y="3" width="20" height="2" rx="1" />
+                <rect y="9" width="20" height="2" rx="1" />
+                <rect y="15" width="20" height="2" rx="1" />
+              </svg>
+            </button>
           </div>
         </div>
       </header>
@@ -94,6 +155,7 @@ export function Navbar() {
               ["New Product Request", "/new-product-request"],
               ["Feedback", "/feedback"],
               ["About Us", "/about"],
+              ["Guides", "/guides"],
             ].map(([label, href]) => (
               <Link
                 key={href}
