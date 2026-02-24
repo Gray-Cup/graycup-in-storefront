@@ -5,7 +5,7 @@ import { ShoppingCart, Minus, Plus } from "lucide-react";
 import { toast } from "sonner";
 import { ShareButton } from "./ShareButton";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { CardHeader, Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { useCart } from "@/components/cart-provider";
 import { CURRENCY } from "@/lib/currency";
@@ -37,8 +37,14 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
   const totalPrice = selectedVariant.price * quantity;
 
   return (
-    <Card className="border border-gray-200">
-      <CardContent className="space-y-6 py-6">
+    <Card className="">
+      <CardHeader>
+                    <p className="text-2xl font-semibold">
+              {CURRENCY.symbol}
+              {selectedVariant.price.toLocaleString(CURRENCY.locale)}
+            </p>
+      </CardHeader>
+      <CardContent className="space-y-6 py-4">
         {/* Variant Selector */}
         {product.variants.length > 1 && (
           <div className="space-y-2">
@@ -55,7 +61,7 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
               {product.variants.map((variant) => (
                 <option key={variant.name} value={variant.name}>
                   {variant.name} - {CURRENCY.symbol}
-                  {variant.price.toLocaleString(CURRENCY.locale)}/{product.priceRange.unit.replace("per ", "")}
+                  {variant.price.toLocaleString(CURRENCY.locale)}
                 </option>
               ))}
             </select>
@@ -86,13 +92,10 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
         </div>
 
         {/* Price Display */}
-        <div className="space-y-2 pt-4 border-t">
+        <div className="space-y-2 pt-4">
           <div className="flex justify-between items-center">
-            <span className="text-sm text-muted-foreground">Price per unit:</span>
-            <span className="text-lg font-semibold">
-              {CURRENCY.symbol}
-              {selectedVariant.price.toLocaleString(CURRENCY.locale)}/{product.priceRange.unit.replace("per ", "")}
-            </span>
+            <span className="text-sm text-muted-foreground">Item Price:</span>
+
           </div>
           <div className="flex justify-between items-center">
             <span className="text-sm text-muted-foreground">Total:</span>
@@ -104,9 +107,10 @@ export function ProductConfigurator({ product }: ProductConfiguratorProps) {
         </div>
 
         {/* Action Buttons */}
-        <div className="space-y-3 pt-4 border-t">
+        <div className="space-y-3 pt-4">
           <Button
             onClick={handleAddToCart}
+            variant="blue"
             className="w-full"
             size="lg"
           >

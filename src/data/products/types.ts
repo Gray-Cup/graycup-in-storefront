@@ -9,6 +9,7 @@ export type Product = {
   slug: string;
   name: string;
   image: string;
+  images?: string[];
   description: string;
   longDescription?: string;
   details: string[];

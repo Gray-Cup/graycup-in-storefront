@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getProductBySlug, getAllProductSlugs } from "@/data/products";
-import { ProductConfigurator, PriceDisplay } from "@/components/products";
+import { ProductConfigurator, ProductImageSlideshow } from "@/components/products";
 import { Badge } from "@/components/ui/badge";
 import {
   Accordion,
@@ -129,18 +129,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 <p className="text-gray-600">{product.description}</p>
               </div>
 
-              {/* Price */}
-              <div className="py-4 border-y border-gray-200">
-                <p className="text-sm text-muted-foreground mb-1">Price</p>
-                <p className="text-2xl font-bold">
-                  <PriceDisplay
-                    minPrice={product.priceRange.min}
-                    maxPrice={product.priceRange.max}
-                    unit={product.priceRange.unit}
-                  />
-                </p>
-              </div>
-
               {/* Add to Cart */}
               <ProductConfigurator product={product} />
 
@@ -206,6 +194,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
               </Accordion>
             </div>
           </div>
+
+          {/* Image Slideshow */}
+          {product.images && product.images.length > 0 && (
+            <ProductImageSlideshow
+              images={product.images}
+              productName={product.name}
+            />
+          )}
         </div>
       </div>
     </div>
