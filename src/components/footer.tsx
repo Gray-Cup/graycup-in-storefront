@@ -32,7 +32,7 @@ export default function Footer() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="text-muted-foreground hover:underline hover:text-foreground transition-colors"
               >
                 {link.label}
               </Link>
@@ -46,7 +46,7 @@ export default function Footer() {
                 href={link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="text-muted-foreground hover:underline hover:text-foreground transition-colors"
               >
                 {link.label}
               </Link>
@@ -117,7 +117,7 @@ export default function Footer() {
                     ? "noopener noreferrer"
                     : undefined
                 }
-                className="hover:text-foreground transition-colors"
+                className="hover:text-foreground hover:underline transition-colors"
               >
                 {link.label}
               </Link>
