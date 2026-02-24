@@ -41,7 +41,6 @@ export default function NewProductRequestPage() {
       category:
         selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1),
       productName: formData.get("productName") as string,
-      quantity: formData.get("quantity") as string,
       details: formData.get("details") as string,
       turnstileToken: turnstile.token,
     };
@@ -158,14 +157,6 @@ export default function NewProductRequestPage() {
                 name="productName"
                 placeholder="e.g., Organic Green Tea, Darjeeling First Flush"
                 required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="quantity">Estimated Quantity (per month)</Label>
-              <Input
-                id="quantity"
-                name="quantity"
-                placeholder="e.g., 100 kg, 500 units"
               />
             </div>
           </div>
