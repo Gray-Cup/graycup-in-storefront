@@ -28,7 +28,8 @@ export default function ContactPage() {
             </p>
             <Button size="minor" variant="black" asChild className="mt-auto">
               <a
-                href="https://cal.com/graycup"
+                href="https://cal.com/arjunaditya/30min?user=arjunaditya"
+
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -44,10 +45,7 @@ export default function ContactPage() {
               Call us directly.
             </p>
             <p className="text-sm text-black underline underline-offset-4 hover:text-neutral-600">
-              +91 98765 43210
-            </p>
-            <p className="text-sm text-black underline underline-offset-4 hover:text-neutral-600 pt-4">
-              +91 98765 43240
+              +91 8527914317
             </p>
           </div>
 
@@ -55,7 +53,7 @@ export default function ContactPage() {
           <div className="p-4 border rounded-lg">
             <h2 className="font-semibold text-black mb-1">Customer Support</h2>
             <p className="text-sm text-muted-foreground mb-3">
-              Response within 48 hours.
+              Response within 12 hours.
             </p>
             <a
               href="mailto:support@graycup.org"
@@ -69,7 +67,7 @@ export default function ContactPage() {
           <div className="p-4 border rounded-lg">
             <h2 className="font-semibold text-black mb-1">General Enquiries</h2>
             <p className="text-sm text-muted-foreground mb-3">
-              Response within 48 hours.
+              Response within 12 hours.
             </p>
             <a
               href="mailto:arjun@graycup.org"
