@@ -128,6 +128,7 @@ export default function RootLayout({
         <OrganizationSchema />
         <SpeedInsights />
         <RootProviders>{children}</RootProviders>
+        <Floating />
         {/* <UserJotWidget /> */}
         {/* <WhatsappWidget /> */}
         <Floating />
